@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class CharacterBasicMovement : MonoBehaviour
 {
+    [SerializeField] private Animator anim;
     private float horizontal; //horizontal movement
-    private float speed = 5f;
-    private float jumpingPower = 6f;
+    private float speed = 3f;
+    private float jumpingPower = 5f;
     private bool isFacingRight = true;
 
     private bool doubleJump;
@@ -25,13 +26,16 @@ public class CharacterBasicMovement : MonoBehaviour
 
     private Coroutine recharge;
 
-
     private void Update()
     {
 
         //Walking
         horizontal = Input.GetAxisRaw("Horizontal");
-
+        anim.SetFloat("Speed", Mathf.Abs(horizontal));
+        if (Input.GetButton("Horizontal"))
+        {
+            FindObjectOfType<AudioManager>().Play("Walk");
+        }
         //Checking for double jump
         CheckDJ();
 
@@ -105,6 +109,8 @@ public class CharacterBasicMovement : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
 
                 doubleJump = !doubleJump;
+
+                FindObjectOfType<AudioManager>().Play("Jump");
             }
         }
     }
@@ -154,13 +160,13 @@ public class CharacterBasicMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             running = true;
-            speed = 10f;
+            speed = 6f;
         }
         //Checking if the key is pressed
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             running = false;
-            speed = 5f;
+            speed = 3f;
         }
     }
 }

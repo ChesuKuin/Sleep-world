@@ -20,21 +20,14 @@ public class Dieandfinish : MonoBehaviour
         if (collision.gameObject.CompareTag("Kill"))
         {
             DedUi.SetActive(true);
+            FindObjectOfType<AudioManager>().Play("Die");
+            FindObjectOfType<AudioManager>().Stop("MainMusic");
         }
         else if (collision.gameObject.CompareTag("Finish"))
         {
             FinishUi.SetActive(true);
-        }
-    }
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Kill"))
-        {
-            DedUi.SetActive(false);
-        }
-        else if (collision.gameObject.CompareTag("Finish"))
-        {
-            FinishUi.SetActive(false);
+            FindObjectOfType<AudioManager>().Play("End");
+            FindObjectOfType<AudioManager>().Stop("MainMusic");
         }
     }
 }

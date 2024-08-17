@@ -11,6 +11,7 @@ public class JumpPad : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * bounce, ForceMode2D.Impulse);
+            FindObjectOfType<AudioManager>().Play("Boing");
         }
     }
 }
